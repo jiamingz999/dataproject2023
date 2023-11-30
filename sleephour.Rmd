@@ -1,0 +1,34 @@
+---
+title: "sleepdata"
+author: "Jiaming Zhang"
+date: "2023-11-20"
+output: html_document
+---
+
+```{r}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+sleep_data <- read_excel("/Users/jiamingzhang/Desktop/MetroState/Data Visulization/sleephourdata.xlsx")
+
+print(colnames(sleep_data))
+
+
+sleep_data$`Melatonin taken` <- as.factor(sleep_data$`Melatonin taken`)
+
+
+summary(sleep_data)
+
+t_test_result <- t.test(Sleephours ~ `Melatonin taken`, data = sleep_data)
+
+print(t_test_result)
+
+ggplot(sleep_data, aes(x = `Melatonin taken`, y = Sleephours)) +
+  geom_boxplot() +
+  labs(title = "Sleep Hours with and without Melatonin",
+       x = "Melatonin Taken",
+       y = "Sleep Hours") +
+  theme_minimal()
+```
+
